@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  DBHOST: 65.0.173.103
+  DBNAME: simpleapi
+  DBUSER: master1
+kind: ConfigMap
+metadata:
+  name: simpleapi-configs
+  namespace: default
+

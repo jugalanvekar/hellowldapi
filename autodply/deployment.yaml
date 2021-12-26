@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 2
+  labels:
+    run: simpleapi
+  name: simpleapi
+  namespace: default
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      run: simpleapi
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: simpleapi
+    spec:
+      containers:
+      - env:
+        - name: DBHOST
+          valueFrom:
+            configMapKeyRef:
+              name: simpleapi-configs
+              key: DBHOST
+        - name: DBUSER
+          valueFrom:
+            configMapKeyRef:
+              name: simpleapi-configs
+              key: DBUSER
+        - name: DBPASS
+          valueFrom:
+            secretKeyRef:
+              name: dbpass
+              key: dbpass
+        - name: DBNAME
+          valueFrom:
+            configMapKeyRef:
+              name: simpleapi-configs
+              key: DBNAME
+        livenessProbe:
+          httpGet:
+            path: /__health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        image: jugalanvekar/simpleapi:01
+        imagePullPolicy: Always
+        name: simpleapi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+
