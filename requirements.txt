@@ -13,3 +13,6 @@ six==1.11.0
 SQLAlchemy==1.2.7
 virtualenv==15.2.0
 Werkzeug==0.14.1
+psycopg2==2.9.2
+pygresql==5.2.2
+sqlalchemy_pygresql==1.0.1
