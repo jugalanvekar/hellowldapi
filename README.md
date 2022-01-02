@@ -1,9 +1,9 @@
-# simpleapi
+# hellowldapi
 
 Hello World API with Python and Flask
 This repo contains files needed to create a Hello World API, using Python and Flask. The application is bundled in a container and deployed to a kubernetes cluster. The backend database is Postgres.
 
-API functionality
+#API functionality
 Description: Saves/updates the given user's name and date of birth in the database.
 
 Request: PUT /hello/John { "dateOfBirth": "2000-01-01" }
@@ -20,13 +20,13 @@ when John's birthday is in 5 days: { "message": "Hello, John! Your birthday is i
 
 when John's birthday is today: { "message": "Hello, John! Happy birthday" }
 
-Details
+#Details
 The app is written in Python, using Flask framework
 
-simpleapi.py is the actual app code
+hellowldapi.py is the actual app code
 requirements.txt are the dependencies required to run the app
 Dockerfile is used to build docker container
-k8syamls is the folder containing required yaml files to deploy to kubernetes cluster
+autodply is the folder containing required yaml files to deploy to kubernetes cluster
 deployment.yaml - will create a deployment of 6 containers
 configmap.yaml - will create environment variables needed by the application to run. make sure to fill these ones
 secrets.yaml - will create environment variable containing db password, make sure to fill this one too
@@ -34,13 +34,13 @@ service.yaml - will create a service type LoadBalancer, exposing the application
 Deployment steps
 I have tested this on Google Kubernetes Engine
 
-Download/pull this repository: git clone https://github.com/jaguarrr/simpleapi.git
+Download/pull this repository: git clone https://github.com/jugalanvekar/simpleapi.git
 
-Go to the newly created directory cd simpleapi
+Go to the newly created directory cd hellowldapi
 
 Build and tag your docker image
 
-$ docker build . -t jaguar/simpleapi
+$ docker build . -t jugalanvekar/simpleapi
 Sending build context to Docker daemon  63.49kB
 Step 1/6 : FROM python:2
 2: Pulling from library/python
@@ -72,12 +72,12 @@ Step 6/6 : CMD [ "python", "./simpleapi.py" ]
 Removing intermediate container ac1d6a836fa9
  ---> 9f66d97ba0c9
 Successfully built 9f66d97ba0c9
-Successfully tagged jaguar/simpleapi:latest
+Successfully tagged jugalanvekar/simpleapi:latest
 Make sure to push the image to docker hub: $ docker push jaguar/simpleapi
 
-I'm assuming you have access to a MySQL server. You can use the simpleapi.sql file from this repo to create the database, the table and a user with required access. Please note you need to change the user password in the SQL file .
+# Please note you need to change the user password in the SQL file .
 
-Once you have the DB sorted, please make sure you replaced the followings:
+# Once you have the DB sorted, please make sure you replaced the followings:
 
 DBHOST: <INSERT_DB_IP_OR_HOST>
 DBNAME: <INSERT_DB_NAME>
@@ -95,38 +95,38 @@ svc/kubernetes   ClusterIP   10.55.240.1   <none>        443/TCP   2d
 $
 then just execute the kubectl apply command:
 
-$ kubectl apply -f k8syamls/
-configmap "simpleapi-configs" created
-deployment "simpleapi" created
+$ kubectl apply -f autodply/
+configmap "hellowldapi-configs" created
+deployment "hellowldapi" created
 secret "dbpass" created
-service "simpleapi" created
+service "hellowldapi" created
 $
 now check the resources and get the public IP of the app:
 
 $ kubectl get all
 NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deploy/simpleapi   6         6         6            6           3m
+deploy/hellowldapi   6         6         6            6           3m
 
 NAME                      DESIRED   CURRENT   READY     AGE
-rs/simpleapi-796bf89569   6         6         6         3m
+rs/hellowldapi-796bf89569   6         6         6         3m
 
 NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deploy/simpleapi   6         6         6            6           3m
+deploy/hellowldapi   6         6         6            6           3m
 
 NAME                      DESIRED   CURRENT   READY     AGE
-rs/simpleapi-796bf89569   6         6         6         3m
+rs/hellowldapi-796bf89569   6         6         6         3m
 
 NAME                            READY     STATUS    RESTARTS   AGE
-po/simpleapi-796bf89569-cczqb   1/1       Running   0          3m
-po/simpleapi-796bf89569-fd6g8   1/1       Running   0          3m
-po/simpleapi-796bf89569-glsng   1/1       Running   0          3m
-po/simpleapi-796bf89569-mcdz2   1/1       Running   0          3m
-po/simpleapi-796bf89569-n6srp   1/1       Running   0          3m
-po/simpleapi-796bf89569-xj5c9   1/1       Running   0          3m
+po/hellowldapi-796bf89569-cczqb   1/1       Running   0          3m
+po/hellowldapi-796bf89569-fd6g8   1/1       Running   0          3m
+po/hellowldapi-796bf89569-glsng   1/1       Running   0          3m
+po/hellowldapi-796bf89569-mcdz2   1/1       Running   0          3m
+po/hellowldapi-796bf89569-n6srp   1/1       Running   0          3m
+po/hellowldapi-796bf89569-xj5c9   1/1       Running   0          3m
 
 NAME             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
 svc/kubernetes   ClusterIP      10.55.240.1    <none>          443/TCP        2d
-svc/simpleapi    LoadBalancer   10.55.249.83   35.202.53.166   80:30608/TCP   3m
+svc/hellowldapi    LoadBalancer   10.55.249.83   35.202.53.166   80:30608/TCP   3m
 $
 Now check the functionality of the app:
 
