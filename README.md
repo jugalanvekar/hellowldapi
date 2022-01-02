@@ -24,14 +24,22 @@ when John's birthday is today: { "message": "Hello, John! Happy birthday" }
 The app is written in Python, using Flask framework
 
 hellowldapi.py is the actual app code
+
 requirements.txt are the dependencies required to run the app
+
 Dockerfile is used to build docker container
+
 autodply is the folder containing required yaml files to deploy to kubernetes cluster
+
 deployment.yaml - will create a deployment of 6 containers
+
 configmap.yaml - will create environment variables needed by the application to run. make sure to fill these ones
+
 secrets.yaml - will create environment variable containing db password, make sure to fill this one too
+
 service.yaml - will create a service type LoadBalancer, exposing the application on a public IP
-Deployment steps
+
+#Deployment steps
 I have tested this on Google Kubernetes Engine
 
 Download/pull this repository: git clone https://github.com/jugalanvekar/simpleapi.git
