@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 2
+  labels:
+    run: hellowldapi
+  name: hellowldapi
+  namespace: default
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      run: hellowldapi
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: hellowldapi
+    spec:
+      containers:
+      - env:
+        - name: DBHOST
+          valueFrom:
+            configMapKeyRef:
+              name: hellowldapi-configs
+              key: DBHOST
+        - name: DBUSER
+          valueFrom:
+            configMapKeyRef:
+              name: hellowldapi-configs
+              key: DBUSER
+        - name: DBPASS
+          valueFrom:
+            secretKeyRef:
+              name: dbpass
+              key: dbpass
+        - name: DBNAME
+          valueFrom:
+            configMapKeyRef:
+              name: hellowldapi-configs
+              key: DBNAME
+        livenessProbe:
+          httpGet:
+            path: /__health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        image: jugalanvekar/hellowldapi:01
+        imagePullPolicy: Always
+        name: hellowldapi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+

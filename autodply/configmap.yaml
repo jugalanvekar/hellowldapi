@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  DBHOST: 13.235.31.71
+  DBNAME: hellowldapi
+  DBUSER: master1
+kind: ConfigMap
+metadata:
+  name: simpleapi-configs
+  namespace: default
+
