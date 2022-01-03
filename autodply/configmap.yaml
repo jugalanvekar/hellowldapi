@@ -5,6 +5,6 @@ data:
   DBUSER: master1
 kind: ConfigMap
 metadata:
-  name: simpleapi-configs
+  name: hellowldapi-configs
   namespace: default
 
