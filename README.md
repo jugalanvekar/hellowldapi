@@ -91,6 +91,8 @@ Once you have the DB sorted, please make sure you replaced the followings:
     DBHOST: <INSERT_DB_IP_OR_HOST>
     DBNAME: <INSERT_DB_NAME>
     DBUSER: <INSERT_DB_USER>
+***********************************DB Connectivty *********************
+  postgresql://master1:password@13.235.31.71:5432/hellowldapi]
 
   with appropriate values in 'autodply/configmap.yaml' file, and replaced the following:
 
